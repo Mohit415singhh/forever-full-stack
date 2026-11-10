@@ -1,5 +1,5 @@
 import validator from "validator";
-import bcrypt from "bcrypt"
+import bcrypt from "bcryptjs"
 import jwt from 'jsonwebtoken'
 import { createHash, randomBytes } from 'crypto'
 import userModel from "../models/userModel.js";
