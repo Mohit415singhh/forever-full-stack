@@ -61,9 +61,9 @@ const App = () => {
         </div>
       </div>
       <div
-        className='elfsight-app-734148f5-7f2e-413c-b74d-ba1e0ced579a'
-        data-elfsight-app-lazy>
-      </div>
+        elfsight-app-734148f5-7f2e-413c-b74d-ba1ec0ed579a'
+        data-elfsight-app-lazy
+      />
     </>
   )
 }
