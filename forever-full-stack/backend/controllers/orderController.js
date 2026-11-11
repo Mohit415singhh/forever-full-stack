@@ -120,6 +120,7 @@ const placeOrderRazorpay = async (req,res) => {
             items,
             address,
             amount,
+            status: 'Payment Pending',
             paymentMethod:"Razorpay",
             payment:false,
             date: Date.now()
@@ -169,7 +170,7 @@ const verifyRazorpay = async (req,res) => {
 
             if (!order.payment) {
                 const paidOrder = await orderModel.findOneAndUpdate(
-                    { _id: order._id, userId, payment: false, status: { $in: ['Order Placed', 'Payment Failed'] } },
+                    { _id: order._id, userId, payment: false, status: { $in: ['Payment Pending', 'Payment Failed'] } },
                     { $set: { payment: true, status: 'Order Placed' } },
                     { new: true }
                 )
@@ -210,7 +211,7 @@ const failRazorpayPayment = async (req, res) => {
                 userId,
                 paymentMethod: 'Razorpay',
                 payment: false,
-                status: { $in: ['Order Placed', 'Payment Failed'] }
+                status: { $in: ['Payment Pending', 'Payment Failed'] }
             },
             { $set: { status: 'Payment Failed' } },
             { new: true }
@@ -267,7 +268,7 @@ const cancelUserOrder = async (req,res) => {
         }
 
         const order = await orderModel.findOneAndUpdate(
-            { _id: orderId, userId, status: { $in: ['Order Placed', 'Packing'] } },
+            { _id: orderId, userId, status: { $in: ['Payment Pending', 'Order Placed', 'Packing'] } },
             { $set: { status: 'Cancelled' } },
             { new: true }
         )
@@ -291,6 +292,10 @@ const cancelUserOrder = async (req,res) => {
 
         if (existingOrder.status === 'Cancelled') {
             return res.status(409).json({ success: false, message: 'This order has already been cancelled.' })
+        }
+
+        if (existingOrder.status === 'Payment Failed') {
+            return res.status(409).json({ success: false, message: 'This payment failed. Please place the order again.' })
         }
 
         return res.status(409).json({ success: false, message: 'This order can no longer be cancelled.' })
