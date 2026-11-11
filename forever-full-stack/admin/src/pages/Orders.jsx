@@ -82,11 +82,12 @@ const Orders = ({ token }) => {
               <select
                 onChange={(event)=>statusHandler(event,order._id)}
                 value={order.status}
-                disabled={order.status === 'Cancelled' || order.status === 'Payment Failed'}
-                className={`p-2 font-semibold ${order.status === 'Cancelled' || order.status === 'Payment Failed' ? 'text-red-600 bg-red-50' : ''}`}
+                disabled={order.status === 'Cancelled' || order.status === 'Payment Failed' || order.status === 'Payment Pending'}
+                className={`p-2 font-semibold ${order.status === 'Cancelled' || order.status === 'Payment Failed' ? 'text-red-600 bg-red-50' : order.status === 'Payment Pending' ? 'text-amber-700 bg-amber-50' : ''}`}
               >
                 {order.status === 'Cancelled' && <option value="Cancelled">Cancelled by customer</option>}
                 {order.status === 'Payment Failed' && <option value="Payment Failed">Payment Failed</option>}
+                {order.status === 'Payment Pending' && <option value="Payment Pending">Payment Pending</option>}
                 <option value="Order Placed">Order Placed</option>
                 <option value="Packing">Packing</option>
                 <option value="Shipped">Shipped</option>
