@@ -92,8 +92,6 @@ const Product = () => {
           <p>E-commerce websites typically display products or services along with detailed descriptions, images, prices, and any available variations (e.g., sizes, colors). Each product usually has its own dedicated page with relevant information.</p>
         </div>
       </div>
-
-      <p className='mt-8 inline-block border px-5 py-3 text-sm'>Reviews (3)</p>
       <ProductReviews productId={productData._id} />
 
       {/* --------- display related products ---------- */}
