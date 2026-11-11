@@ -19,6 +19,11 @@ const About = () => {
               <p>Our mission at CFY is to empower customers with choice, convenience, and confidence. We&apos;re dedicated to providing a seamless shopping experience that exceeds expectations, from browsing and ordering to delivery and beyond.</p>
           </div>
       </div>
+        <section className='mb-10 border-y py-8 text-center' aria-labelledby='founder-heading'>
+          <h2 id='founder-heading' className='text-xl font-medium text-gray-800'>Meet Our Founder</h2>
+          <p className='mt-2 text-gray-600'>Mohit Kumar, Founder of CFY</p>
+      </section>
+
 
       <div className=' text-xl py-4'>
           <Title text1={'WHY'} text2={'CHOOSE US'} />
