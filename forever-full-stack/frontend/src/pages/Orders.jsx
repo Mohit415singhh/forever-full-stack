@@ -14,6 +14,7 @@ const Orders = () => {
   const [cancellingOrders, setCancellingOrders] = useState([])
   const orderStatuses = ['Order Placed', 'Packing', 'Shipped', 'Out for delivery', 'Delivered']
   const shippedStatuses = ['Shipped', 'Out for delivery', 'Delivered']
+  const unavailableStatuses = ['Cancelled', 'Payment Failed', 'Payment Pending']
 
   const loadOrderData = useCallback(async () => {
     try {
@@ -117,7 +118,7 @@ const Orders = () => {
                     </div>
                     <div className='md:w-1/2 flex justify-between'>
                         <div className='flex items-center gap-2'>
-                            <p className={`min-w-2 h-2 rounded-full ${['Cancelled', 'Payment Failed'].includes(item.status) ? 'bg-red-500' : 'bg-green-500'}`}></p>
+                            <p className={`min-w-2 h-2 rounded-full ${['Cancelled', 'Payment Failed'].includes(item.status) ? 'bg-red-500' : item.status === 'Payment Pending' ? 'bg-amber-500' : 'bg-green-500'}`}></p>
                             <p className='text-sm md:text-base'>{item.status}</p>
                         </div>
                         <div className='flex flex-wrap justify-end gap-2'>
@@ -131,11 +132,11 @@ const Orders = () => {
                           </button>
                           <button
                             onClick={() => setTrackedItemKey(trackedItemKey === item.trackKey ? '' : item.trackKey)}
-                            disabled={['Cancelled', 'Payment Failed'].includes(item.status)}
-                            className={`border px-4 py-2 text-sm font-medium rounded-sm ${['Cancelled', 'Payment Failed'].includes(item.status) ? 'cursor-not-allowed text-gray-400' : ''}`}
+                            disabled={unavailableStatuses.includes(item.status)}
+                            className={`border px-4 py-2 text-sm font-medium rounded-sm ${unavailableStatuses.includes(item.status) ? 'cursor-not-allowed text-gray-400' : ''}`}
                             aria-expanded={trackedItemKey === item.trackKey}
                           >
-                            {['Cancelled', 'Payment Failed'].includes(item.status) ? 'Tracking unavailable' : trackedItemKey === item.trackKey ? 'Hide tracking' : 'Track Order'}
+                            {unavailableStatuses.includes(item.status) ? 'Tracking unavailable' : trackedItemKey === item.trackKey ? 'Hide tracking' : 'Track Order'}
                           </button>
                         </div>
                     </div>
